@@ -1,0 +1,18 @@
+.sidebar-open-content {
+    margin-left: 255px;
+    width: calc(100vw - 255px);
+    transition: var(--tran-03);
+}
+
+.sidebar-closed-content {
+    margin-left: 95px;
+    width: calc(100vw - 95px);
+    transition: var(--tran-03);
+}
+
+@media (max-width: 768px) {
+    .sidebar-closed-content {
+        width: calc(100vw - 50px);
+        margin: auto;
+    }
+}
