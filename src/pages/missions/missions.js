@@ -131,7 +131,7 @@ function Users(props) {
 
   const handleSwitch = (id, value) => {
     axios
-      .patch(`http://127.0.0.1:3000/mission/${id}}`, {
+      .patch(`http://127.0.0.1:3000/mission/${id}`, {
         done: value,
       })
       .then((response) => {
@@ -270,12 +270,14 @@ function Users(props) {
           const rowIndex = tableMeta.rowIndex;
           const isEditing = rowIndex === editingRow;
           const rowData = tableMeta.rowData;
+          let id = rowData[0];
           return (
             <div style={{ textAlign: "center" }}>
               <Switch
                 checked={value}
                 onChange={(e) => {
-                  handleSwitch(rowData[0], value);
+                  handleSwitch(id, !value);
+                  value = !value;
                 }}
               />
             </div>

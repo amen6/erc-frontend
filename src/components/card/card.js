@@ -1,10 +1,25 @@
 import React from "react";
+import { useState } from "react";
 import "./card.css";
 
-export default function card() {
+export default function Card(props) {
+  const [isShowing, setIsShowing] = useState(false);
+  const [zIndex, setZIndex] = useState(10);
+
+  const handleClick = () => {
+    if (isShowing) {
+      setIsShowing(false);
+      if (zIndex > 10) {
+        setZIndex(10);
+      }
+    } else {
+      setIsShowing(true);
+      setZIndex(zIndex + 1);
+    }
+  };
   return (
     <>
-      <div className="card">
+      <div className={`card${isShowing ? " show" : ""}`} style={{ zIndex }}>
         <div className="card__image-holder">
           <img
             className="card__image"
@@ -13,7 +28,14 @@ export default function card() {
           />
         </div>
         <div className="card-title">
-          <a href="#" className="toggle-info btn">
+          <a
+            href="#"
+            className="toggle-info btn"
+            onClick={() => {
+              handleClick();
+              props.handleCardsClick();
+            }}
+          >
             <span className="left"></span>
             <span className="right"></span>
           </a>
