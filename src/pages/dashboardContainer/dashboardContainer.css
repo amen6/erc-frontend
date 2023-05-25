@@ -1,6 +1,6 @@
 .sidebar-open-content {
-    margin-left: 255px;
-    width: calc(100vw - 255px);
+    margin-left: 215px;
+    width: calc(100vw - 215px);
     transition: var(--tran-03);
 }
 

@@ -1,9 +1,10 @@
 import "./sideBar.css";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { BiHomeAlt, BiChevronRight } from "react-icons/bi";
+import { BiChevronRight } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
-import { RxActivityLog } from "react-icons/rx";
+import { BsJournalMedical } from "react-icons/bs";
+import { FaAmbulance, FaClinicMedical } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 import logo from "./logo.svg";
 
@@ -36,22 +37,22 @@ const Sidebar = (props) => {
             <ul className="menu-links">
               <li className="nav-link">
                 <NavLink to="/">
-                  <BiHomeAlt className="icon" />
+                  <FaClinicMedical className="icon" />
                   <span className="text nav-text">Home</span>
                 </NavLink>
               </li>
 
               <li className="nav-link">
-                <NavLink to="/users">
-                  <AiOutlineUser className="icon" />
-                  <span className="text nav-text">Users</span>
+                <NavLink to="/missions">
+                  <BsJournalMedical className="icon" />
+                  <span className="text nav-text">Missions</span>
                 </NavLink>
               </li>
 
               <li className="nav-link">
-                <NavLink to="/events">
-                  <RxActivityLog className="icon" />
-                  <span className="text nav-text">Events</span>
+                <NavLink to="/ambulances">
+                  <FaAmbulance className="icon" />
+                  <span className="text nav-text">Ambulances</span>
                 </NavLink>
               </li>
 
