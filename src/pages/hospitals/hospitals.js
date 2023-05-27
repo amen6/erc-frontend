@@ -21,7 +21,7 @@ export default function Ambulances() {
 
   const getData = () => {
     axios
-      .get("http://127.0.0.1:3000/ambulance")
+      .get("http://127.0.0.1:3000/hospital")
       .then((response) => {
         console.log(response);
         setData(response.data.data);

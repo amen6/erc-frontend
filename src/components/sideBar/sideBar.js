@@ -2,8 +2,7 @@ import "./sideBar.css";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BiChevronRight } from "react-icons/bi";
-import { AiOutlineUser } from "react-icons/ai";
-import { BsJournalMedical } from "react-icons/bs";
+import { BsFileMedicalFill, BsFillHospitalFill } from "react-icons/bs";
 import { FaAmbulance, FaClinicMedical } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 import logo from "./logo.svg";
@@ -44,7 +43,7 @@ const Sidebar = (props) => {
 
               <li className="nav-link">
                 <NavLink to="/missions">
-                  <BsJournalMedical className="icon" />
+                  <BsFileMedicalFill className="icon" />
                   <span className="text nav-text">Missions</span>
                 </NavLink>
               </li>
@@ -53,6 +52,13 @@ const Sidebar = (props) => {
                 <NavLink to="/ambulances">
                   <FaAmbulance className="icon" />
                   <span className="text nav-text">Ambulances</span>
+                </NavLink>
+              </li>
+
+              <li className="nav-link">
+                <NavLink to="/hospitals">
+                  <BsFillHospitalFill className="icon" />
+                  <span className="text nav-text">Hospitals</span>
                 </NavLink>
               </li>
 

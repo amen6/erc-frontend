@@ -25,12 +25,11 @@ export default function Card(props) {
           <img
             className="card__image"
             src={`http://localhost:3000/${props.image}`}
-            alt="wave"
+            alt={props.image}
           />
         </div>
         <div className="card-title">
-          <a
-            href="#"
+          <button
             className="toggle-info btn"
             onClick={() => {
               handleClick();
@@ -39,7 +38,7 @@ export default function Card(props) {
           >
             <span className="left"></span>
             <span className="right"></span>
-          </a>
+          </button>
           <h2>
             {props.name}
             {/* <small>Image from unsplash.com</small> */}
@@ -53,7 +52,7 @@ export default function Card(props) {
           <div className="card-flap flap2">
             <div className="card-actions">
               <a href="#" className="btn">
-                Read more
+                Open Profile
               </a>
             </div>
           </div>

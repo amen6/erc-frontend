@@ -9,7 +9,7 @@ export default function ConfirmationPopup(props) {
 
   return (
     <dialog className="confirmation-popup" id="modal">
-      <p>Are you sure you want to delete this user?</p>
+      <p>Are you sure you want to delete this {props.item}?</p>
       <div>
         <button
           id="confirmation-delete-btn"

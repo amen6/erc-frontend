@@ -6,12 +6,13 @@ import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import debounce from "lodash/debounce";
 import { Box } from "@mui/system";
-import { MdDeleteForever, MdOutlineEdit } from "react-icons/md";
-import { AiOutlineSave, AiOutlinePlus } from "react-icons/ai";
 import AppRegistrationSharpIcon from "@mui/icons-material/AppRegistrationSharp";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
 import Switch from "@mui/material/Switch";
+import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 function createData(
   _id,
@@ -63,12 +64,12 @@ function Users(props) {
   const rows =
     Data ||
     [].map((item) => {
-      createData(
+      return createData(
         item._id,
         item.date,
         item.ambulance_id,
         item.depart,
-        item.arrive,
+        item.return,
         item.done,
         item.mission_type,
         item.case_id,
@@ -114,12 +115,19 @@ function Users(props) {
     setEditingRow(true);
     axios
       .patch(`http://127.0.0.1:3000/mission/${rowData[0]}`, {
-        first_name: rowData[1],
-        last_name: rowData[2],
-        active_email: rowData[3],
-        phone: rowData[4],
-        student_id: rowData[5],
-        verified: rowData[6],
+        date: rowData[1],
+        ambulance_id: rowData[2],
+        depart: rowData[3],
+        arrive: rowData[4],
+        done: rowData[5],
+        mission_type: rowData[6],
+        case_id: rowData[7],
+        description: rowData[8],
+        patient_id: rowData[9],
+        from_location: rowData[10],
+        to_location: rowData[11],
+        infectious_disease: rowData[12],
+        doctor: rowData[13],
       })
       .then((response) => {
         getData();
@@ -161,16 +169,21 @@ function Users(props) {
           const rowIndex = tableMeta.rowIndex;
           const isEditing = rowIndex === editingRow;
           let date = new Date(value);
+
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
-                  className="EditInput"
-                  value={value}
-                  onChange={(e) => {
-                    updateValue(e.target.value);
-                  }}
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateTimePicker
+                    label="Choose Time"
+                    className="mui-datetimepicker"
+                    defaultValue={dayjs(date)}
+                    onChange={(e) => {
+                      let time = new Date(e.$d).toISOString();
+                      updateValue(time);
+                    }}
+                  />
+                </LocalizationProvider>
               ) : (
                 date.toLocaleString()
               )}
@@ -219,13 +232,17 @@ function Users(props) {
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
-                  className="EditInput"
-                  value={value}
-                  onChange={(e) => {
-                    updateValue(e.target.value);
-                  }}
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateTimePicker
+                    label="Choose Time"
+                    className="mui-datetimepicker"
+                    defaultValue={dayjs(date)}
+                    onChange={(e) => {
+                      let time = new Date(e.$d).toISOString();
+                      updateValue(time);
+                    }}
+                  />
+                </LocalizationProvider>
               ) : (
                 date.toLocaleString()
               )}
@@ -242,19 +259,24 @@ function Users(props) {
         customBodyRender: (value, tableMeta, updateValue) => {
           const rowIndex = tableMeta.rowIndex;
           const isEditing = rowIndex === editingRow;
+          let date = new Date(value);
 
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
-                  className="EditInput"
-                  value={value}
-                  onChange={(e) => {
-                    updateValue(e.target.value);
-                  }}
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateTimePicker
+                    label="Choose Time"
+                    className="mui-datetimepicker"
+                    defaultValue={dayjs(date)}
+                    onChange={(e) => {
+                      let time = new Date(e.$d).toISOString();
+                      updateValue(time);
+                    }}
+                  />
+                </LocalizationProvider>
               ) : (
-                value
+                date.toLocaleString()
               )}
             </div>
           );
@@ -508,7 +530,6 @@ function Users(props) {
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
           const rowData = tableMeta.rowData;
-          const id = rowData[0];
           return (
             <>
               {isEditing && editingRow === tableMeta.rowIndex ? (
@@ -621,7 +642,11 @@ function Users(props) {
                 textAlign: "center",
               }}
             />
-            <ConfirmationPopup handleDelete={handleDelete} id={deleteId} />
+            <ConfirmationPopup
+              handleDelete={handleDelete}
+              id={deleteId}
+              item={"mission"}
+            />
           </Box>
         </div>
       )}
