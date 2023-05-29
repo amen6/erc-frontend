@@ -13,6 +13,14 @@ import Switch from "@mui/material/Switch";
 import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  TextField,
+} from "@mui/material";
+import useFetch from "../../components/customFetch/customFetch";
 
 function createData(
   _id,
@@ -60,6 +68,11 @@ function Users(props) {
     document.title = "Missions";
     getData();
   }, []);
+
+  const ambulancesData = useFetch("ambulance");
+  const casesData = useFetch("case");
+  const patientsData = useFetch("patient/name/");
+  const hospitalsData = useFetch("hospital");
 
   const rows =
     Data ||
@@ -204,15 +217,33 @@ function Users(props) {
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
-                  className="EditInput"
-                  value={value}
-                  onChange={(e) => {
-                    updateValue(e.target.value);
-                  }}
-                />
+                <FormControl sx={{ m: 1, minWidth: 80 }}>
+                  <InputLabel id="demo-simple-select-autowidth-label">
+                    Ambulance
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={value._id}
+                    size="large"
+                    onChange={(e, t) => {
+                      updateValue({
+                        _id: t.props.value,
+                        name: t.props.children,
+                      });
+                    }}
+                    sx={{ width: "160px" }}
+                    label="Ambulance"
+                  >
+                    {ambulancesData.data.data.map((option) => (
+                      <MenuItem key={option._id} value={option._id}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               ) : (
-                value
+                value.name
               )}
             </div>
           );
@@ -319,9 +350,10 @@ function Users(props) {
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
+                <TextField
                   className="EditInput"
-                  value={value}
+                  defaultValue={value}
+                  label="Type"
                   onChange={(e) => {
                     updateValue(e.target.value);
                   }}
@@ -341,20 +373,38 @@ function Users(props) {
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
           const rowIndex = tableMeta.rowIndex;
-
           const isEditing = rowIndex === editingRow;
+
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
-                  className="EditInput"
-                  value={value}
-                  onChange={(e) => {
-                    updateValue(e.target.value);
-                  }}
-                />
+                <FormControl sx={{ m: 1, minWidth: 80 }}>
+                  <InputLabel id="demo-simple-select-autowidth-label">
+                    Case
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={value._id}
+                    size="large"
+                    onChange={(e, t) => {
+                      updateValue({
+                        _id: t.props.value,
+                        name: t.props.children,
+                      });
+                    }}
+                    sx={{ width: "160px" }}
+                    label="Case"
+                  >
+                    {casesData.data.data.map((option) => (
+                      <MenuItem key={option._id} value={option._id}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               ) : (
-                value
+                value.name
               )}
             </div>
           );
@@ -373,12 +423,13 @@ function Users(props) {
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
+                <TextField
                   className="EditInput"
-                  value={value}
+                  defaultValue={value}
                   onChange={(e) => {
                     updateValue(e.target.value);
                   }}
+                  label="Description"
                 />
               ) : (
                 value
@@ -395,20 +446,50 @@ function Users(props) {
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
           const rowIndex = tableMeta.rowIndex;
-
           const isEditing = rowIndex === editingRow;
+          if (patientsData.isLoading) return "loading";
+
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
-                  className="EditInput"
-                  value={value}
-                  onChange={(e) => {
-                    updateValue(e.target.value);
-                  }}
-                />
+                <FormControl sx={{ m: 1, minWidth: 80 }}>
+                  <InputLabel id="demo-simple-select-autowidth-label">
+                    Patient
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={value._id}
+                    size="large"
+                    onChange={(e, t) => {
+                      updateValue({
+                        _id: t.props.value,
+                        first_name: t.props.first_name,
+                        last_name: t.props.last_name,
+                      });
+                      console.log(e, t, value);
+                    }}
+                    sx={{ width: "160px" }}
+                    label="Patient"
+                  >
+                    {!patientsData.isLoading ? (
+                      patientsData.data.response.map((option) => (
+                        <MenuItem
+                          key={option._id}
+                          value={option._id}
+                          first_name={option.first_name}
+                          last_name={option.last_name}
+                        >
+                          {option.first_name + " " + option.last_name}
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem>Loading...</MenuItem>
+                    )}
+                  </Select>
+                </FormControl>
               ) : (
-                value
+                value.first_name + " " + value.last_name
               )}
             </div>
           );
@@ -422,20 +503,49 @@ function Users(props) {
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
           const rowIndex = tableMeta.rowIndex;
-
           const isEditing = rowIndex === editingRow;
+          let name = value.name || value;
+          let id = value._id || value;
+
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
-                  className="EditInput"
-                  value={value}
-                  onChange={(e) => {
-                    updateValue(e.target.value);
-                  }}
-                />
+                <FormControl sx={{ m: 1, minWidth: 80 }}>
+                  <InputLabel id="demo-simple-select-autowidth-label">
+                    Patient
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={id}
+                    size="large"
+                    onChange={(e, t) => {
+                      updateValue({
+                        _id: t.props.value,
+                        name: t.props.children,
+                      });
+                    }}
+                    sx={{ width: "160px" }}
+                    label="Patient"
+                  >
+                    (
+                    <MenuItem key={"home"} value={"home"}>
+                      home
+                    </MenuItem>
+                    )
+                    {!hospitalsData.isLoading ? (
+                      hospitalsData.data.data.map((option) => (
+                        <MenuItem key={option._id} value={option._id}>
+                          {option.name}
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem>Loading...</MenuItem>
+                    )}
+                  </Select>
+                </FormControl>
               ) : (
-                value
+                name
               )}
             </div>
           );
@@ -449,20 +559,49 @@ function Users(props) {
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
           const rowIndex = tableMeta.rowIndex;
-
           const isEditing = rowIndex === editingRow;
+          let name = value.name || value;
+          let id = value._id || value;
+
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
-                  className="EditInput"
-                  value={value}
-                  onChange={(e) => {
-                    updateValue(e.target.value);
-                  }}
-                />
+                <FormControl sx={{ m: 1, minWidth: 80 }}>
+                  <InputLabel id="demo-simple-select-autowidth-label">
+                    Patient
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={id}
+                    size="large"
+                    onChange={(e, t) => {
+                      updateValue({
+                        _id: t.props.value,
+                        name: t.props.children,
+                      });
+                    }}
+                    sx={{ width: "160px" }}
+                    label="Patient"
+                  >
+                    (
+                    <MenuItem key={"home"} value={"home"}>
+                      home
+                    </MenuItem>
+                    )
+                    {!hospitalsData.isLoading ? (
+                      hospitalsData.data.data.map((option) => (
+                        <MenuItem key={option._id} value={option._id}>
+                          {option.name}
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem>Loading...</MenuItem>
+                    )}
+                  </Select>
+                </FormControl>
               ) : (
-                value
+                name
               )}
             </div>
           );
@@ -481,12 +620,13 @@ function Users(props) {
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
+                <TextField
                   className="EditInput"
-                  value={value}
+                  defaultValue={value}
                   onChange={(e) => {
                     updateValue(e.target.value);
                   }}
+                  label="Infectious Disease"
                 />
               ) : (
                 value
@@ -508,12 +648,13 @@ function Users(props) {
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
-                <input
+                <TextField
                   className="EditInput"
-                  value={value}
+                  defaultValue={value}
                   onChange={(e) => {
                     updateValue(e.target.value);
                   }}
+                  label="Doctor"
                 />
               ) : (
                 value
@@ -611,12 +752,6 @@ function Users(props) {
     rowsPerPage: 5,
     loaded: true,
     rowsPerPageOptions: [5],
-    onCellClick: (cellData, cellMeta) => {
-      const rowIndex = cellMeta.rowIndex;
-      if (cellMeta.colIndex === 3) {
-        setEditingRow(rowIndex);
-      }
-    },
     onRowsDelete: handleDelete,
     fullScreen: true,
   };

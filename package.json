@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
+    "dotenv": "^16.0.3",
     "mui-datatables": "^4.3.0",
     "react": "^18.2.0",
     "react-auth-kit": "^2.12.2",

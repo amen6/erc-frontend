@@ -30,9 +30,7 @@ const useFetch = (url) => {
   const reFetch = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get(`${process.env.REACT_APP_URL}${url}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(`${process.env.REACT_APP_URL}${url}`);
       setData(res.data);
     } catch (err) {
       setError(err);
