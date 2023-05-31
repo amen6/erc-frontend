@@ -6,9 +6,11 @@ import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import debounce from "lodash/debounce";
 import { Box } from "@mui/system";
-import AppRegistrationSharpIcon from "@mui/icons-material/AppRegistrationSharp";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
+import {
+  AppRegistrationSharp,
+  DeleteRounded,
+  SaveAsRounded,
+} from "@mui/icons-material/";
 import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
@@ -678,7 +680,7 @@ function Users(props) {
           return (
             <>
               {isEditing && editingRow === tableMeta.rowIndex ? (
-                <SaveAsRoundedIcon
+                <SaveAsRounded
                   className="save-btn"
                   sx={{
                     color: "#5cbdcb",
@@ -698,7 +700,7 @@ function Users(props) {
                   }}
                 />
               ) : (
-                <AppRegistrationSharpIcon
+                <AppRegistrationSharp
                   className="edit-btn"
                   onClick={() => {
                     setIsEditing(true);
@@ -718,7 +720,7 @@ function Users(props) {
                 />
               )}
               &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-              <DeleteRoundedIcon
+              <DeleteRounded
                 sx={{
                   color: "#5cbdcb",
                   cursor: "pointer",
