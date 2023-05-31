@@ -114,7 +114,7 @@ function Users(props) {
 
   const getData = () => {
     axios
-      .get("${process.env.REACT_APP_URL}mission")
+      .get(`${process.env.REACT_APP_URL}mission`)
       .then((response) => {
         console.log(response);
         setData(response.data.data);

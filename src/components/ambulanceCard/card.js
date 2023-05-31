@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Switch, TextField, Slider, Box } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import { DeleteRounded, SaveAsRounded, Edit } from "@mui/icons-material/";
@@ -9,9 +9,10 @@ export default function Card(props) {
   const [isShowing, setIsShowing] = useState(false);
   const [zIndex, setZIndex] = useState(10);
   const [isEditing, setIsEditing] = useState(false);
-  const [CardName, setCardName] = useState("");
-  const [isOutOfService, setOutOfService] = useState("");
-  const [FuelType, setFuelType] = useState("");
+  const [CardName, setCardName] = useState(props.name);
+  const [FuelType, setFuelType] = useState(props.fuel_type);
+  const timeRef = useRef(null);
+  const [FuelPercentage, setFuelPercentage] = useState(props.fuel_percentage);
 
   const handleClick = () => {
     if (isShowing) {
@@ -26,9 +27,10 @@ export default function Card(props) {
   };
 
   const handleSwitch = (id, value) => {
+    console.log(id, value);
     axios
       .patch(`${process.env.REACT_APP_URL}ambulance/${id}`, {
-        available: value,
+        out_of_service: value,
       })
       .then((response) => {
         console.log(response);
@@ -69,7 +71,7 @@ export default function Card(props) {
     axios
       .patch(`${process.env.REACT_APP_URL}ambulance/${props._id}`, {
         name: CardName,
-        out_of_service: isOutOfService,
+        fuel_type: FuelType,
       })
       .then((response) => {
         props.getData();
@@ -77,6 +79,24 @@ export default function Card(props) {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleSwiper = (value) => {
+    if (timeRef.current) {
+      clearTimeout(timeRef.current);
+    }
+    timeRef.current = setTimeout(() => {
+      axios
+        .patch(`${process.env.REACT_APP_URL}ambulance/${props._id}`, {
+          fuel_percentage: value,
+        })
+        .then((response) => {
+          props.getData();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, 500);
   };
   return (
     <>
@@ -126,12 +146,19 @@ export default function Card(props) {
               <span>
                 <bold>Fuel: </bold>
                 <Slider
-                  sx={{ overflow: "visible", width: "50%" }}
-                  defaultValue={30}
+                  sx={{
+                    overflow: "visible",
+                    width: "50%",
+                    marginLeft: 10 + "px",
+                  }}
+                  defaultValue={props.fuelPercentage}
                   step={10}
                   marks
                   min={0}
                   max={100}
+                  onChange={(e) => {
+                    handleSwiper(e.target.value);
+                  }}
                 />
               </span>
               <span>
@@ -155,8 +182,8 @@ export default function Card(props) {
               <span>
                 <bold>Available: </bold>
                 <StyledSwitch
-                  checked={props.available}
-                  onChange={(e) => {
+                  checked={!props.outOfService}
+                  onChange={() => {
                     handleSwitch(props._id, !props.outOfService);
                   }}
                 />

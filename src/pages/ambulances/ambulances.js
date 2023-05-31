@@ -45,12 +45,13 @@ export default function Ambulances() {
                 return (
                   <AmbulanceCard
                     key={e._id}
-                    id={e._id}
+                    _id={e._id}
                     name={e.name}
                     image={e.image}
                     fuelType={e.fuel_type}
                     fuelPercentage={e.fuel_percentage}
                     outOfService={e.out_of_service}
+                    getData={getData}
                     handleCardsClick={handleCardsClick}
                   />
                 );
