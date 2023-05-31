@@ -1,18 +1,17 @@
 import React from "react";
 import { useState } from "react";
-import { Switch, TextField } from "@mui/material";
+import { Switch, TextField, Slider, Box } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import { DeleteRounded, SaveAsRounded, Edit } from "@mui/icons-material/";
 import axios from "axios";
-
-import "./card.css";
 
 export default function Card(props) {
   const [isShowing, setIsShowing] = useState(false);
   const [zIndex, setZIndex] = useState(10);
   const [isEditing, setIsEditing] = useState(false);
   const [CardName, setCardName] = useState("");
-  const [CardCode, setCardCode] = useState("");
+  const [isOutOfService, setOutOfService] = useState("");
+  const [FuelType, setFuelType] = useState("");
 
   const handleClick = () => {
     if (isShowing) {
@@ -28,7 +27,7 @@ export default function Card(props) {
 
   const handleSwitch = (id, value) => {
     axios
-      .patch(`${process.env.REACT_APP_URL}hospital/${id}`, {
+      .patch(`${process.env.REACT_APP_URL}ambulance/${id}`, {
         available: value,
       })
       .then((response) => {
@@ -68,9 +67,9 @@ export default function Card(props) {
 
   const handleUpdate = () => {
     axios
-      .patch(`${process.env.REACT_APP_URL}hospital/${props._id}`, {
+      .patch(`${process.env.REACT_APP_URL}ambulance/${props._id}`, {
         name: CardName,
-        hospital_code: CardCode,
+        out_of_service: isOutOfService,
       })
       .then((response) => {
         props.getData();
@@ -101,21 +100,23 @@ export default function Card(props) {
             <span className="right"></span>
           </button>
 
-          <h2 style={{ color: `${!props.available ? "rgb(250, 0 ,0)" : ""}` }}>
+          <h2
+            style={{ color: `${props.outOfService ? "rgb(250, 0 ,0)" : ""}` }}
+          >
             {isEditing ? (
               <TextField
                 className="EditInput"
                 size="small"
                 defaultValue={props.name}
-                label="Hospital"
+                label="Ambulance"
                 onChange={(e) => {
                   setCardName(e.target.value);
                 }}
-                sx={{ width: 150 }}
+                sx={{ width: 150, marginTop: 1 }}
                 required
               />
             ) : (
-              <>{CardName ? CardName : props.name} hospital</>
+              <>{CardName ? CardName : props.name}</>
             )}
           </h2>
         </div>
@@ -123,21 +124,32 @@ export default function Card(props) {
           <div className="card-description">
             <>
               <span>
-                <bold>Code: </bold>
+                <bold>Fuel: </bold>
+                <Slider
+                  sx={{ overflow: "visible", width: "50%" }}
+                  defaultValue={30}
+                  step={10}
+                  marks
+                  min={0}
+                  max={100}
+                />
+              </span>
+              <span>
+                <bold>Fuel Type: </bold>
                 {isEditing ? (
                   <TextField
                     className="EditInput"
                     size="small"
-                    defaultValue={props.hospital_code}
-                    label="Code"
+                    defaultValue={props.fuelType}
+                    label="Fuel Type"
                     onChange={(e) => {
-                      setCardCode(e.target.value);
+                      setFuelType(e.target.value);
                     }}
                     sx={{ width: 150, marginTop: 1 }}
                     required
                   />
                 ) : (
-                  <>{CardCode ? CardCode : props.hospital_code}</>
+                  <>{FuelType ? FuelType : props.fuelType}</>
                 )}
               </span>
               <span>
@@ -145,7 +157,7 @@ export default function Card(props) {
                 <StyledSwitch
                   checked={props.available}
                   onChange={(e) => {
-                    handleSwitch(props._id, !props.available);
+                    handleSwitch(props._id, !props.outOfService);
                   }}
                 />
               </span>

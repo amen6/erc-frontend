@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Card from "../../components/card/card";
+import AmbulanceCard from "../../components/ambulanceCard/card";
 import Loader from "../../components/loader/loader";
 
 export default function Ambulances() {
@@ -21,7 +21,7 @@ export default function Ambulances() {
 
   const getData = () => {
     axios
-      .get("http://127.0.0.1:3000/ambulance")
+      .get(`${process.env.REACT_APP_URL}ambulance`)
       .then((response) => {
         console.log(response);
         setData(response.data.data);
@@ -43,11 +43,14 @@ export default function Ambulances() {
           {Data
             ? Data.map((e) => {
                 return (
-                  <Card
+                  <AmbulanceCard
                     key={e._id}
                     id={e._id}
                     name={e.name}
                     image={e.image}
+                    fuelType={e.fuel_type}
+                    fuelPercentage={e.fuel_percentage}
+                    outOfService={e.out_of_service}
                     handleCardsClick={handleCardsClick}
                   />
                 );

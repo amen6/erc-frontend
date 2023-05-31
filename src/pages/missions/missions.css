@@ -7,8 +7,8 @@
     color: #fff;
 }
 
-.MuiSvgIcon-root:hover,
-.MuiButtonBase-root:hover {
+.mui-table .MuiSvgIcon-root:hover,
+.mui-table .MuiButtonBase-root:hover {
     color: #000 !important;
 }
 

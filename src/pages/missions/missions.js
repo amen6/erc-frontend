@@ -9,11 +9,11 @@ import { Box } from "@mui/system";
 import AppRegistrationSharpIcon from "@mui/icons-material/AppRegistrationSharp";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
-import Switch from "@mui/material/Switch";
 import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import {
+  Switch,
   Select,
   MenuItem,
   FormControl,
@@ -101,7 +101,7 @@ function Users(props) {
 
   const handleDelete = (rowsDeleted) => {
     axios
-      .delete(`http://127.0.0.1:3000/mission/${rowsDeleted}`, {})
+      .delete(`${process.env.REACT_APP_URL}mission/${rowsDeleted}`, {})
       .then((response) => {
         getData();
       })
@@ -112,7 +112,7 @@ function Users(props) {
 
   const getData = () => {
     axios
-      .get("http://127.0.0.1:3000/mission")
+      .get("${process.env.REACT_APP_URL}mission")
       .then((response) => {
         console.log(response);
         setData(response.data.data);
@@ -127,7 +127,7 @@ function Users(props) {
   const handleUpdate = (rowData) => {
     setEditingRow(true);
     axios
-      .patch(`http://127.0.0.1:3000/mission/${rowData[0]}`, {
+      .patch(`${process.env.REACT_APP_URL}mission/${rowData[0]}`, {
         date: rowData[1],
         ambulance_id: rowData[2],
         depart: rowData[3],
@@ -152,7 +152,7 @@ function Users(props) {
 
   const handleSwitch = (id, value) => {
     axios
-      .patch(`http://127.0.0.1:3000/mission/${id}`, {
+      .patch(`${process.env.REACT_APP_URL}mission/${id}`, {
         done: value,
       })
       .then((response) => {
@@ -235,11 +235,15 @@ function Users(props) {
                     sx={{ width: "160px" }}
                     label="Ambulance"
                   >
-                    {ambulancesData.data.data.map((option) => (
-                      <MenuItem key={option._id} value={option._id}>
-                        {option.name}
-                      </MenuItem>
-                    ))}
+                    {!ambulancesData.isLoading ? (
+                      ambulancesData.data.data.map((option) => (
+                        <MenuItem key={option._id} value={option._id}>
+                          {option.name}
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem>Loading...</MenuItem>
+                    )}
                   </Select>
                 </FormControl>
               ) : (
@@ -763,7 +767,7 @@ function Users(props) {
         </div>
       ) : (
         <div>
-          <Box sx={{ maxWidth: "75%", margin: "auto" }}>
+          <Box sx={{ maxWidth: "75%", margin: "auto" }} className="mui-table">
             <MUIDataTable
               title={"Missions"}
               data={rows}

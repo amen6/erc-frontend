@@ -88,7 +88,9 @@ div.card {
 
 div.card img {
     max-width: 300px;
+    min-width: 300px;
     min-height: 225px;
+    max-height: 225px;
 }
 
 div.card .card__image-holder {
@@ -112,7 +114,7 @@ div.card div.card-title button.toggle-info {
     position: absolute;
     right: 15px;
     top: 10px;
-    width: 32px;
+    width: 33px;
 }
 
 div.card div.card-title button.toggle-info span {
@@ -137,6 +139,7 @@ div.card div.card-title button.toggle-info span.right {
 
 div.card div.card-title h2 {
     font-size: 24px;
+    text-transform: capitalize;
     font-weight: 700;
     letter-spacing: -0.05em;
     margin: 0;
@@ -151,15 +154,48 @@ div.card div.card-title h2 small {
 }
 
 div.card div.card-description {
-    padding: 0 15px 10px;
+    padding: 0 15px 0;
     position: relative;
     font-size: 14px;
 }
 
+.card-description > span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 18px;
+}
+
+.card-description>span>bold {
+    font-weight: 500;
+}
+
 div.card div.card-actions {
     box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.075);
-    padding: 10px 15px 20px;
+    padding: 0 15px 20px;
     text-align: center;
+    display: flex;
+    font-size: 18px;
+    align-items: center;
+}
+
+div.card div.card-actions bold {
+    font-weight: 500;
+}
+
+div.card div.card-actions > div {
+    margin-left: 30px;
+}
+
+div.card div.card-actions svg {
+    color: #008a93;
+}
+div.card div.card-actions .delete {
+    color: #d53030;
+}
+div.card div.card-actions svg:hover {
+    transform:  scale(1.3);
+    transition: 0.2s ease-out;
 }
 
 div.card div.card-flap {
@@ -197,7 +233,7 @@ div.card.show {
 }
 
 div.card.show div.card-title button.toggle-info {
-    background: #ff6666 !important;
+    background: #d53030 !important;
 }
 
 div.card.show div.card-title button.toggle-info span {
@@ -205,7 +241,7 @@ div.card.show div.card-title button.toggle-info span {
 }
 
 div.card.show div.card-title button.toggle-info span.left {
-    right: 10px;
+    right: 11px;
 }
 
 div.card.show div.card-title button.toggle-info span.right {
