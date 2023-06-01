@@ -75,6 +75,7 @@ function Users(props) {
   const casesData = useFetch("case");
   const patientsData = useFetch("patient/name/");
   const hospitalsData = useFetch("hospital");
+  console.log(ambulancesData, casesData, patientsData, hospitalsData);
 
   const rows =
     Data ||
@@ -380,7 +381,7 @@ function Users(props) {
         customBodyRender: (value, tableMeta, updateValue) => {
           const rowIndex = tableMeta.rowIndex;
           const isEditing = rowIndex === editingRow;
-
+          console.log(value);
           return (
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
@@ -518,7 +519,7 @@ function Users(props) {
               {isEditing ? (
                 <FormControl sx={{ m: 1, minWidth: 80 }}>
                   <InputLabel id="demo-simple-select-autowidth-label">
-                    Patient
+                    Location
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-autowidth-label"
@@ -532,7 +533,7 @@ function Users(props) {
                       });
                     }}
                     sx={{ width: "160px" }}
-                    label="Patient"
+                    label="Location"
                   >
                     (
                     <MenuItem key={"home"} value={"home"}>
@@ -574,7 +575,7 @@ function Users(props) {
               {isEditing ? (
                 <FormControl sx={{ m: 1, minWidth: 80 }}>
                   <InputLabel id="demo-simple-select-autowidth-label">
-                    Patient
+                    Location
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-autowidth-label"
@@ -588,13 +589,11 @@ function Users(props) {
                       });
                     }}
                     sx={{ width: "160px" }}
-                    label="Patient"
+                    label="Location"
                   >
-                    (
                     <MenuItem key={"home"} value={"home"}>
                       home
                     </MenuItem>
-                    )
                     {!hospitalsData.isLoading ? (
                       hospitalsData.data.data.map((option) => (
                         <MenuItem key={option._id} value={option._id}>
@@ -602,7 +601,7 @@ function Users(props) {
                         </MenuItem>
                       ))
                     ) : (
-                      <MenuItem>Loading...</MenuItem>
+                      <MenuItem value={value._id}>Loading...</MenuItem>
                     )}
                   </Select>
                 </FormControl>
