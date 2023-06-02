@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { BiChevronRight } from "react-icons/bi";
 import { BsFileMedicalFill, BsFillHospitalFill } from "react-icons/bs";
 import { FaAmbulance, FaClinicMedical } from "react-icons/fa";
+import { RiTeamFill } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import logo from "./logo.svg";
 
@@ -59,6 +60,13 @@ const Sidebar = (props) => {
                 <NavLink to="/hospitals">
                   <BsFillHospitalFill className="icon" />
                   <span className="text nav-text">Hospitals</span>
+                </NavLink>
+              </li>
+
+              <li className="nav-link">
+                <NavLink to="/teams">
+                  <RiTeamFill className="icon" />
+                  <span className="text nav-text">Teams</span>
                 </NavLink>
               </li>
 
