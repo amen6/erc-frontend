@@ -749,7 +749,7 @@ function Users(props) {
     responsive: "simple",
     selectableRows: "none",
     search: true,
-    searchPlaceholder: "Search for User",
+    searchPlaceholder: "Search for Mission",
     onSearchChange: (searchValue) => handleSearch(searchValue),
     download: true,
     print: true,

@@ -31,3 +31,11 @@
 .mui-datetimepicker {
   width: 225px;
 }
+
+.mui-datepicker {
+  width: 160px;
+}
+
+.EditInput {
+  min-width: 80px;
+}
