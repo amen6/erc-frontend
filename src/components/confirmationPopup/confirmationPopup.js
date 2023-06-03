@@ -1,5 +1,4 @@
 import React from "react";
-import { ToastContainer } from "react-toastify";
 import "./confirmationPopup.css";
 
 export default function ConfirmationPopup(props) {
@@ -22,7 +21,6 @@ export default function ConfirmationPopup(props) {
         </button>
         <button onClick={closePopup}>Cancel</button>
       </div>
-      <ToastContainer />
     </dialog>
   );
 }

@@ -1,0 +1,30 @@
+.inputComponent {
+ display: flex;
+ flex-direction: column;
+ flex: 1 1 50%;
+}
+.fieldInput {
+    max-width: 400px;
+    height: 60px;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+    font-size: 14px;
+    border: 2px solid var(--accent);
+}
+
+
+.fieldLabel {
+    color: var(--black);
+    font-size: 18px;
+    font-weight: 500;
+    margin: 10px 0;
+    width: fit-content;
+}
+.clickedInput {
+    border: 2px solid var(--accent);
+    color: var(--accent);
+}
+.clickedInput::placeholder{
+    color: var(--accent);
+}
