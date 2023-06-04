@@ -49,23 +49,20 @@ function createData(
 }
 
 function Paramedics(props) {
-  const [Loading, setLoading] = useState(true);
-  const [Data, setData] = useState([]);
   const [editingRow, setEditingRow] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     document.title = "Paramedics";
-    getData();
+    reFetch();
   }, []);
 
-  const paramedicsData = useFetch("paramedic");
-  console.log(paramedicsData);
+  const { data, error, isLoading, reFetch } = useFetch("paramedic");
+  console.log(data, error, isLoading, reFetch);
 
   const rows =
-    Data ||
+    data.data ||
     [].map((item) => {
       return createData(
         item._id,
@@ -92,23 +89,9 @@ function Paramedics(props) {
     axios
       .delete(`${process.env.REACT_APP_URL}paramedic/${rowsDeleted}`, {})
       .then((response) => {
-        getData();
+        reFetch();
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const getData = () => {
-    axios
-      .get(`${process.env.REACT_APP_URL}paramedic`)
-      .then((response) => {
-        console.log(response);
-        setData(response.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
         console.log(error);
       });
   };
@@ -131,7 +114,7 @@ function Paramedics(props) {
         is_super_paramedic: rowData[12],
       })
       .then((response) => {
-        getData();
+        reFetch();
       })
       .catch((error) => {
         console.log(error);
@@ -144,7 +127,7 @@ function Paramedics(props) {
         is_super_paramedic: value,
       })
       .then((response) => {
-        getData();
+        reFetch();
       })
       .catch((error) => {
         console.log(error);
@@ -593,7 +576,7 @@ function Paramedics(props) {
   };
   return (
     <>
-      {Loading ? (
+      {isLoading ? (
         <div>
           <Loader />
         </div>

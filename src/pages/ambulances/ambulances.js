@@ -1,47 +1,37 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useAuthHeader } from "react-auth-kit";
 import AmbulanceCard from "../../components/ambulanceCard/card";
 import Loader from "../../components/loader/loader";
+import useFetch from "../../components/customFetch/customFetch";
 
 export default function Ambulances() {
   const [isCardsShowing, setIsCardsShowing] = useState(false);
-  const [Loading, setLoading] = useState(true);
-  const [Data, setData] = useState([]);
+  const authHeader = useAuthHeader();
+  const { data, isLoading, error, reFetch } = useFetch(
+    "ambulance",
+    authHeader()
+  );
 
   useEffect(() => {
-    setLoading(true);
     document.title = "Ambulances";
-    getData();
+    reFetch();
   }, []);
 
   const handleCardsClick = () => {
     setIsCardsShowing(!isCardsShowing);
   };
 
-  const getData = () => {
-    axios
-      .get(`${process.env.REACT_APP_URL}ambulance`)
-      .then((response) => {
-        console.log(response);
-        setData(response.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
-      });
-  };
   return (
     <>
-      {Loading ? (
+      {isLoading ? (
         <>
           <Loader />
         </>
       ) : (
         <div className={`cards${isCardsShowing ? " showing" : ""}`}>
-          {Data
-            ? Data.map((e) => {
+          {data.data
+            ? data.data.map((e) => {
                 return (
                   <AmbulanceCard
                     key={e._id}
@@ -51,7 +41,8 @@ export default function Ambulances() {
                     fuelType={e.fuel_type}
                     fuelPercentage={e.fuel_percentage}
                     outOfService={e.out_of_service}
-                    getData={getData}
+                    reFetch={reFetch}
+                    authHeader={authHeader}
                     handleCardsClick={handleCardsClick}
                   />
                 );

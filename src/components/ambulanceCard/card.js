@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useRef } from "react";
-import { Switch, TextField, Slider, Box } from "@mui/material";
+import { Switch, TextField, Slider } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import { DeleteRounded, SaveAsRounded, Edit } from "@mui/icons-material/";
 import axios from "axios";
@@ -12,7 +12,6 @@ export default function Card(props) {
   const [CardName, setCardName] = useState(props.name);
   const [FuelType, setFuelType] = useState(props.fuel_type);
   const timeRef = useRef(null);
-  const [FuelPercentage, setFuelPercentage] = useState(props.fuel_percentage);
 
   const handleClick = () => {
     if (isShowing) {
@@ -29,12 +28,19 @@ export default function Card(props) {
   const handleSwitch = (id, value) => {
     console.log(id, value);
     axios
-      .patch(`${process.env.REACT_APP_URL}ambulance/${id}`, {
-        out_of_service: value,
-      })
+      .patch(
+        `${process.env.REACT_APP_URL}ambulance/${id}`,
+        {
+          out_of_service: value,
+        },
+        {
+          headers: { Authorization: props.authHeader() },
+        }
+      )
       .then((response) => {
         console.log(response);
-        props.getData();
+        props.reFetch();
+        props.handleCardsClick();
       })
       .catch((error) => {
         console.log(error);
@@ -69,12 +75,19 @@ export default function Card(props) {
 
   const handleUpdate = () => {
     axios
-      .patch(`${process.env.REACT_APP_URL}ambulance/${props._id}`, {
-        name: CardName,
-        fuel_type: FuelType,
-      })
+      .patch(
+        `${process.env.REACT_APP_URL}ambulance/${props._id}`,
+        {
+          name: CardName,
+          fuel_type: FuelType,
+        },
+        {
+          headers: { Authorization: props.authHeader() },
+        }
+      )
       .then((response) => {
-        props.getData();
+        props.reFetch();
+        props.handleCardsClick();
       })
       .catch((error) => {
         console.log(error);
@@ -87,11 +100,18 @@ export default function Card(props) {
     }
     timeRef.current = setTimeout(() => {
       axios
-        .patch(`${process.env.REACT_APP_URL}ambulance/${props._id}`, {
-          fuel_percentage: value,
-        })
+        .patch(
+          `${process.env.REACT_APP_URL}ambulance/${props._id}`,
+          {
+            fuel_percentage: value,
+          },
+          {
+            headers: { Authorization: props.authHeader() },
+          }
+        )
         .then((response) => {
-          props.getData();
+          props.reFetch();
+          props.handleCardsClick();
         })
         .catch((error) => {
           console.log(error);

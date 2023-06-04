@@ -30,7 +30,7 @@ function Login() {
           tokenType: "Bearer",
           authState: {
             nickName: response.data.nick_name,
-            isAdmin: response.data.isAdmin,
+            isAdmin: response.data.super,
           },
         });
         navigate("/");

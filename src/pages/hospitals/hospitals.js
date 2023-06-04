@@ -4,13 +4,14 @@ import axios from "axios";
 import Card from "../../components/card/card";
 import Loader from "../../components/loader/loader";
 import ConfirmationPopup from "../../components/confirmationPopup/confirmationPopup";
+import { useAuthHeader } from "react-auth-kit";
 
 export default function Ambulances() {
   const [isCardsShowing, setIsCardsShowing] = useState(false);
   const [Loading, setLoading] = useState(true);
   const [Data, setData] = useState([]);
   const [DeleteId, setDeleteId] = useState("");
-
+  const authHeader = useAuthHeader();
   useEffect(() => {
     setLoading(true);
     document.title = "Ambulances";
@@ -23,7 +24,9 @@ export default function Ambulances() {
 
   const getData = () => {
     axios
-      .get(`${process.env.REACT_APP_URL}hospital`)
+      .get(`${process.env.REACT_APP_URL}hospital`, {
+        headers: { Authorization: authHeader() },
+      })
       .then((response) => {
         console.log(response);
         setData(response.data.data);

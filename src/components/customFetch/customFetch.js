@@ -2,7 +2,7 @@ import axios from "axios";
 // import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 
-const useFetch = (url) => {
+const useFetch = (url, token) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -12,12 +12,9 @@ const useFetch = (url) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_URL}${url}`
-          // {
-          //   headers: { Authorization: `Bearer ${token}` },
-          // }
-        );
+        const res = await axios.get(`${process.env.REACT_APP_URL}${url}`, {
+          headers: { Authorization: token },
+        });
         setData(res.data);
         setIsLoading(false);
       } catch (err) {
@@ -30,7 +27,9 @@ const useFetch = (url) => {
   const reFetch = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get(`${process.env.REACT_APP_URL}${url}`);
+      const res = await axios.get(`${process.env.REACT_APP_URL}${url}`, {
+        headers: { Authorization: token },
+      });
       setData(res.data);
     } catch (err) {
       setError(err);

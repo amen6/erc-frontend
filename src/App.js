@@ -6,6 +6,7 @@ import Hospitals from "./pages/hospitals/hospitals";
 import Teams from "./pages/teams/teams";
 import Login from "./pages/login/login";
 import Paramedics from "./pages/paramedics/paramedics";
+import Patients from "./pages/patients/patients";
 import { Route, Routes } from "react-router-dom";
 import { AuthProvider } from "react-auth-kit";
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/hospitals" element={<Hospitals />}></Route>
             <Route path="/teams" element={<Teams />}></Route>
             <Route path="/paramedics" element={<Paramedics />}></Route>
+            <Route path="/patients" element={<Patients />}></Route>
           </Route>
           <Route path="/login" element={<Login />}></Route>
         </Routes>
