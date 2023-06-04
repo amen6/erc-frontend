@@ -22,6 +22,7 @@ import {
   InputLabel,
   TextField,
 } from "@mui/material";
+import { useAuthHeader } from "react-auth-kit";
 import useFetch from "../../components/customFetch/customFetch";
 
 function createData(
@@ -64,6 +65,7 @@ function Users(props) {
   const [editingRow, setEditingRow] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const authHeader = useAuthHeader();
 
   useEffect(() => {
     setLoading(true);
@@ -71,10 +73,10 @@ function Users(props) {
     getData();
   }, []);
 
-  const ambulancesData = useFetch("ambulance");
-  const casesData = useFetch("case");
-  const patientsData = useFetch("patient/name/");
-  const hospitalsData = useFetch("hospital");
+  const ambulancesData = useFetch("ambulance", authHeader());
+  const casesData = useFetch("case", authHeader());
+  const patientsData = useFetch("patient/name/", authHeader());
+  const hospitalsData = useFetch("hospital", authHeader());
   console.log(ambulancesData, casesData, patientsData, hospitalsData);
 
   const rows =
@@ -104,7 +106,11 @@ function Users(props) {
 
   const handleDelete = (rowsDeleted) => {
     axios
-      .delete(`${process.env.REACT_APP_URL}mission/${rowsDeleted}`, {})
+      .delete(`${process.env.REACT_APP_URL}mission/${rowsDeleted}`, {
+        headers: {
+          Authorization: authHeader(),
+        },
+      })
       .then((response) => {
         getData();
       })
@@ -115,7 +121,11 @@ function Users(props) {
 
   const getData = () => {
     axios
-      .get(`${process.env.REACT_APP_URL}mission`)
+      .get(`${process.env.REACT_APP_URL}mission`, {
+        headers: {
+          Authorization: authHeader(),
+        },
+      })
       .then((response) => {
         console.log(response);
         setData(response.data.data);
@@ -130,21 +140,29 @@ function Users(props) {
   const handleUpdate = (rowData) => {
     setEditingRow(true);
     axios
-      .patch(`${process.env.REACT_APP_URL}mission/${rowData[0]}`, {
-        date: rowData[1],
-        ambulance_id: rowData[2],
-        depart: rowData[3],
-        arrive: rowData[4],
-        done: rowData[5],
-        mission_type: rowData[6],
-        case_id: rowData[7],
-        description: rowData[8],
-        patient_id: rowData[9],
-        from_location: rowData[10],
-        to_location: rowData[11],
-        infectious_disease: rowData[12],
-        doctor: rowData[13],
-      })
+      .patch(
+        `${process.env.REACT_APP_URL}mission/${rowData[0]}`,
+        {
+          date: rowData[1],
+          ambulance_id: rowData[2],
+          depart: rowData[3],
+          arrive: rowData[4],
+          done: rowData[5],
+          mission_type: rowData[6],
+          case_id: rowData[7],
+          description: rowData[8],
+          patient_id: rowData[9],
+          from_location: rowData[10],
+          to_location: rowData[11],
+          infectious_disease: rowData[12],
+          doctor: rowData[13],
+        },
+        {
+          headers: {
+            Authorization: authHeader(),
+          },
+        }
+      )
       .then((response) => {
         getData();
       })
@@ -155,9 +173,17 @@ function Users(props) {
 
   const handleSwitch = (id, value) => {
     axios
-      .patch(`${process.env.REACT_APP_URL}mission/${id}`, {
-        done: value,
-      })
+      .patch(
+        `${process.env.REACT_APP_URL}mission/${id}`,
+        {
+          done: value,
+        },
+        {
+          headers: {
+            Authorization: authHeader(),
+          },
+        }
+      )
       .then((response) => {
         getData();
       })

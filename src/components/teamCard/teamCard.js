@@ -20,14 +20,22 @@ export default function TeamCard(props) {
 
   const handleUpdate = () => {
     axios
-      .patch(`${process.env.REACT_APP_URL}team/${props._id}`, {
-        team_name: TeamName,
-        mission_leader: LeaderName,
-        driver: DriverName,
-        first_paramedic: FirstParamedicName,
-        second_paramedic: SecondParamedicName,
-        ambulance: AmbulanceName,
-      })
+      .patch(
+        `${process.env.REACT_APP_URL}team/${props._id}`,
+        {
+          team_name: TeamName,
+          mission_leader: LeaderName,
+          driver: DriverName,
+          first_paramedic: FirstParamedicName,
+          second_paramedic: SecondParamedicName,
+          ambulance: AmbulanceName,
+        },
+        {
+          headers: {
+            Authorization: props.authHeader(),
+          },
+        }
+      )
       .then((response) => {
         console.log(response);
         props.reFetch();

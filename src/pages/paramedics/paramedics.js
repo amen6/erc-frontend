@@ -14,6 +14,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { TextField, Switch } from "@mui/material";
+import { useAuthHeader } from "react-auth-kit";
 import useFetch from "../../components/customFetch/customFetch";
 
 function createData(
@@ -52,14 +53,16 @@ function Paramedics(props) {
   const [editingRow, setEditingRow] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-
+  const authHeader = useAuthHeader();
   useEffect(() => {
     document.title = "Paramedics";
     reFetch();
   }, []);
 
-  const { data, error, isLoading, reFetch } = useFetch("paramedic");
-  console.log(data, error, isLoading, reFetch);
+  const { data, error, isLoading, reFetch } = useFetch(
+    "paramedic",
+    authHeader()
+  );
 
   const rows =
     data.data ||
@@ -87,7 +90,11 @@ function Paramedics(props) {
 
   const handleDelete = (rowsDeleted) => {
     axios
-      .delete(`${process.env.REACT_APP_URL}paramedic/${rowsDeleted}`, {})
+      .delete(`${process.env.REACT_APP_URL}paramedic/${rowsDeleted}`, {
+        headers: {
+          Authorization: authHeader(),
+        },
+      })
       .then((response) => {
         reFetch();
       })
@@ -99,20 +106,28 @@ function Paramedics(props) {
   const handleUpdate = (rowData) => {
     setEditingRow(true);
     axios
-      .patch(`${process.env.REACT_APP_URL}paramedic/${rowData[0]}`, {
-        nick_name: rowData[1],
-        first_name: rowData[2],
-        father_name: rowData[3],
-        last_name: rowData[4],
-        citizenship: rowData[5],
-        sejel_place: rowData[6],
-        sejel_number: rowData[7],
-        mother_name: rowData[8],
-        date_of_birth: rowData[9],
-        address: rowData[10],
-        phone: rowData[11],
-        is_super_paramedic: rowData[12],
-      })
+      .patch(
+        `${process.env.REACT_APP_URL}paramedic/${rowData[0]}`,
+        {
+          nick_name: rowData[1],
+          first_name: rowData[2],
+          father_name: rowData[3],
+          last_name: rowData[4],
+          citizenship: rowData[5],
+          sejel_place: rowData[6],
+          sejel_number: rowData[7],
+          mother_name: rowData[8],
+          date_of_birth: rowData[9],
+          address: rowData[10],
+          phone: rowData[11],
+          is_super_paramedic: rowData[12],
+        },
+        {
+          headers: {
+            Authorization: authHeader(),
+          },
+        }
+      )
       .then((response) => {
         reFetch();
       })
@@ -123,9 +138,17 @@ function Paramedics(props) {
 
   const handleSwitch = (id, value) => {
     axios
-      .patch(`${process.env.REACT_APP_URL}paramedic/${id}`, {
-        is_super_paramedic: value,
-      })
+      .patch(
+        `${process.env.REACT_APP_URL}paramedic/${id}`,
+        {
+          is_super_paramedic: value,
+        },
+        {
+          headers: {
+            Authorization: authHeader(),
+          },
+        }
+      )
       .then((response) => {
         reFetch();
       })

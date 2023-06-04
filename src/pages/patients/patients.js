@@ -14,6 +14,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { TextField } from "@mui/material";
+import { useAuthHeader } from "react-auth-kit";
 import useFetch from "../../components/customFetch/customFetch";
 
 function createData(
@@ -42,14 +43,14 @@ function Patients(props) {
   const [editingRow, setEditingRow] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const authHeader = useAuthHeader();
 
   useEffect(() => {
     document.title = "Patients";
     reFetch();
   }, []);
 
-  const { data, error, isLoading, reFetch } = useFetch("patient");
-  console.log(data, error, isLoading, reFetch);
+  const { data, error, isLoading, reFetch } = useFetch("patient", authHeader());
 
   const rows =
     data.response ||
@@ -72,7 +73,11 @@ function Patients(props) {
 
   const handleDelete = (rowsDeleted) => {
     axios
-      .delete(`${process.env.REACT_APP_URL}paramedic/${rowsDeleted}`, {})
+      .delete(`${process.env.REACT_APP_URL}patient/${rowsDeleted}`, {
+        headers: {
+          Authorization: authHeader(),
+        },
+      })
       .then((response) => {
         reFetch();
       })
@@ -83,16 +88,25 @@ function Patients(props) {
 
   const handleUpdate = (rowData) => {
     setEditingRow(true);
+    console.log(rowData);
     axios
-      .patch(`${process.env.REACT_APP_URL}paramedic/${rowData[0]}`, {
-        first_name: rowData[1],
-        last_name: rowData[2],
-        date_of_birth: rowData[3],
-        phone: rowData[4],
-        address: rowData[5],
-        description: rowData[6],
-        guarantor: rowData[7],
-      })
+      .patch(
+        `${process.env.REACT_APP_URL}patient/${rowData[0]}`,
+        {
+          first_name: rowData[1],
+          last_name: rowData[2],
+          date_of_birth: rowData[3],
+          phone: rowData[4],
+          address: rowData[5],
+          description: rowData[6],
+          guarantor: rowData[7],
+        },
+        {
+          headers: {
+            Authorization: authHeader(),
+          },
+        }
+      )
       .then((response) => {
         reFetch();
       })

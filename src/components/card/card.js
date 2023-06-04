@@ -4,6 +4,7 @@ import { Switch, TextField } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import { DeleteRounded, SaveAsRounded, Edit } from "@mui/icons-material/";
 import axios from "axios";
+import { useAuthHeader } from "react-auth-kit";
 
 import "./card.css";
 
@@ -11,8 +12,9 @@ export default function Card(props) {
   const [isShowing, setIsShowing] = useState(false);
   const [zIndex, setZIndex] = useState(10);
   const [isEditing, setIsEditing] = useState(false);
-  const [CardName, setCardName] = useState("");
-  const [CardCode, setCardCode] = useState("");
+  const [CardName, setCardName] = useState(props.name);
+  const [CardCode, setCardCode] = useState(props.hospital_code);
+  const authHeader = useAuthHeader();
 
   const handleClick = () => {
     if (isShowing) {
@@ -28,9 +30,17 @@ export default function Card(props) {
 
   const handleSwitch = (id, value) => {
     axios
-      .patch(`${process.env.REACT_APP_URL}hospital/${id}`, {
-        available: value,
-      })
+      .patch(
+        `${process.env.REACT_APP_URL}hospital/${id}`,
+        {
+          available: value,
+        },
+        {
+          headers: {
+            Authorization: authHeader(),
+          },
+        }
+      )
       .then((response) => {
         console.log(response);
         props.getData();
@@ -68,10 +78,18 @@ export default function Card(props) {
 
   const handleUpdate = () => {
     axios
-      .patch(`${process.env.REACT_APP_URL}hospital/${props._id}`, {
-        name: CardName,
-        hospital_code: CardCode,
-      })
+      .patch(
+        `${process.env.REACT_APP_URL}hospital/${props._id}`,
+        {
+          name: CardName,
+          hospital_code: CardCode,
+        },
+        {
+          headers: {
+            Authorization: authHeader(),
+          },
+        }
+      )
       .then((response) => {
         props.getData();
       })

@@ -39,7 +39,11 @@ export default function Ambulances() {
   };
   const handleDelete = (id) => {
     axios
-      .delete(`${process.env.REACT_APP_URL}hospital/${id}`, {})
+      .delete(`${process.env.REACT_APP_URL}hospital/${id}`, {
+        headers: {
+          Authorization: authHeader(),
+        },
+      })
       .then((response) => {
         console.log(response);
         getData();
