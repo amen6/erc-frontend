@@ -41,7 +41,7 @@
 }
 
 a.btn, button.btn {
-    background: #0096a0;
+    background: #333;
     border-radius: 4px;
     box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.25);
     color: #ffffff;
@@ -61,7 +61,7 @@ a.btn, button.btn {
 
 .no-touch a.btn:active,
 a.btn:active, button.btn:active, .no-touch button.btn:active {
-    background: #008a93;
+    background: #333;
     box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.25);
     transform: translate3d(0, 1px, 0);
     transition: all 0.025s 0s ease-out;

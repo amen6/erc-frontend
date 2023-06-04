@@ -55,7 +55,7 @@ export default function Ambulances() {
 
   const showConfirmationBox = (deleteid) => {
     setDeleteId(deleteid);
-    document.querySelector(".confirmation-popup").showModal(1);
+    document.querySelector(".confirmation-popup").showModal();
   };
 
   return (

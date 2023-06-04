@@ -39,3 +39,11 @@
 .EditInput {
   min-width: 80px;
 }
+
+#root .circular-add {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  color: var(--black);
+  font-size: 64px;
+}

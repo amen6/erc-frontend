@@ -6,6 +6,7 @@ import Loading from "../../components/loader/loader";
 import TeamCard from "../../components/teamCard/teamCard";
 import useFetch from "../../components/customFetch/customFetch";
 import ConfirmationPopup from "../../components/confirmationPopup/confirmationPopup";
+import { AddCircle } from "@mui/icons-material/";
 
 export default function TeamsPage() {
   const [DeleteId, setDeleteId] = useState("");
@@ -38,18 +39,21 @@ export default function TeamsPage() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="team-cards-container">
-          {data.data.map((e) => {
-            return (
-              <TeamCard
-                {...e}
-                showConfirmationBox={showConfirmationBox}
-                reFetch={reFetch}
-                authHeader={authHeader}
-              />
-            );
-          })}
-        </div>
+        <>
+          <AddCircle className="circular-add" />
+          <div className="team-cards-container">
+            {data.data.map((e) => {
+              return (
+                <TeamCard
+                  {...e}
+                  showConfirmationBox={showConfirmationBox}
+                  reFetch={reFetch}
+                  authHeader={authHeader}
+                />
+              );
+            })}
+          </div>
+        </>
       )}
       <ConfirmationPopup
         handleDelete={handleDelete}

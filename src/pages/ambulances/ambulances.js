@@ -1,12 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { useAuthHeader } from "react-auth-kit";
 import AmbulanceCard from "../../components/ambulanceCard/card";
 import Loader from "../../components/loader/loader";
 import useFetch from "../../components/customFetch/customFetch";
+import ConfirmationPopup from "../../components/confirmationPopup/confirmationPopup";
 
 export default function Ambulances() {
   const [isCardsShowing, setIsCardsShowing] = useState(false);
+  const [DeleteId, setDeleteId] = useState("");
   const authHeader = useAuthHeader();
   const { data, isLoading, error, reFetch } = useFetch(
     "ambulance",
@@ -18,8 +21,29 @@ export default function Ambulances() {
     reFetch();
   }, []);
 
+  const handleDelete = (id) => {
+    axios
+      .delete(`${process.env.REACT_APP_URL}ambulance/${id}`, {
+        headers: {
+          Authorization: authHeader(),
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        reFetch();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const handleCardsClick = () => {
     setIsCardsShowing(!isCardsShowing);
+  };
+
+  const showConfirmationBox = (deleteid) => {
+    setDeleteId(deleteid);
+    document.querySelector(".confirmation-popup").showModal();
   };
 
   return (
@@ -43,6 +67,7 @@ export default function Ambulances() {
                     outOfService={e.out_of_service}
                     reFetch={reFetch}
                     authHeader={authHeader}
+                    showConfirmationBox={showConfirmationBox}
                     handleCardsClick={handleCardsClick}
                   />
                 );
@@ -50,6 +75,11 @@ export default function Ambulances() {
             : null}
         </div>
       )}
+      <ConfirmationPopup
+        handleDelete={handleDelete}
+        id={DeleteId}
+        item={"hospital"}
+      />
     </>
   );
 }
