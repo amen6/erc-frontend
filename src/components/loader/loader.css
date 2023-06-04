@@ -3,7 +3,7 @@
         left: 50%;
         transform: translate(-50%, 75%);
         font-size: 200px;
-        color: #369cab;
+        color: var(--main-red);
 }
 .loader {
     display: inline-block;

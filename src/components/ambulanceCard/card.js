@@ -164,7 +164,7 @@ export default function Card(props) {
           <div className="card-description">
             <>
               <span>
-                <bold>Fuel: </bold>
+                <strong>Fuel: </strong>
                 <Slider
                   sx={{
                     overflow: "visible",
@@ -182,7 +182,7 @@ export default function Card(props) {
                 />
               </span>
               <span>
-                <bold>Fuel Type: </bold>
+                <strong>Fuel Type: </strong>
                 {isEditing ? (
                   <TextField
                     className="EditInput"
@@ -200,7 +200,7 @@ export default function Card(props) {
                 )}
               </span>
               <span>
-                <bold>Available: </bold>
+                <strong>Available: </strong>
                 <StyledSwitch
                   checked={!props.outOfService}
                   onChange={() => {
@@ -212,7 +212,7 @@ export default function Card(props) {
           </div>
           <div className="card-flap flap2">
             <div className="card-actions">
-              <bold>Actions:</bold>
+              <strong>Actions:</strong>
               <div>
                 {isEditing ? (
                   <SaveAsRounded

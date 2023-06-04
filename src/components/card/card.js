@@ -141,7 +141,7 @@ export default function Card(props) {
           <div className="card-description">
             <>
               <span>
-                <bold>Code: </bold>
+                <strong>Code: </strong>
                 {isEditing ? (
                   <TextField
                     className="EditInput"
@@ -159,7 +159,7 @@ export default function Card(props) {
                 )}
               </span>
               <span>
-                <bold>Available: </bold>
+                <strong>Available: </strong>
                 <StyledSwitch
                   checked={props.available}
                   onChange={(e) => {
@@ -171,7 +171,7 @@ export default function Card(props) {
           </div>
           <div className="card-flap flap2">
             <div className="card-actions">
-              <bold>Actions:</bold>
+              <strong>Actions:</strong>
               <div>
                 {isEditing ? (
                   <SaveAsRounded

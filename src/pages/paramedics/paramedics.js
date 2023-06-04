@@ -519,7 +519,7 @@ function Paramedics(props) {
                 <SaveAsRounded
                   className="save-btn"
                   sx={{
-                    color: "#5cbdcb",
+                    color: "#333",
                     cursor: "pointer",
                     justifyItems: "center",
                     alignItems: "center",
@@ -543,7 +543,7 @@ function Paramedics(props) {
                     setEditingRow(tableMeta.rowIndex);
                   }}
                   sx={{
-                    color: "#5cbdcb",
+                    color: "#333",
                     cursor: "pointer",
                     justifyItems: "center",
                     alignItems: "center",
@@ -558,7 +558,7 @@ function Paramedics(props) {
               &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
               <DeleteRounded
                 sx={{
-                  color: "#5cbdcb",
+                  color: "#333",
                   cursor: "pointer",
                   justifyItems: "center",
                   alignItems: "center",

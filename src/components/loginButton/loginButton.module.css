@@ -1,5 +1,5 @@
 .mybutton {
-    background-color: var(--accent);
+    background-color: var(--main-red);
     color: #fff;
     border: none;
     width: 400px;
@@ -7,4 +7,9 @@
     border-radius: 15px;
     font-size: 20px;
     font-weight: 600;
+}
+
+.mybutton:hover {
+    cursor: pointer;
+    background-color: #c51c18;
 }

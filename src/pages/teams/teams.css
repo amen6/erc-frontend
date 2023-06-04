@@ -1,6 +1,6 @@
 .team-cards-container > * {
     flex: 1 1 100%;
-    max-width: 300px;
+    max-width: 270px;
 }
  .team-cards-container {
     display: flex;

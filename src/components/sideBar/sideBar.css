@@ -1,24 +1,10 @@
-:root {
-    --sidebar-color: #FFF;
-    --toggle-color: #DDD;
-    --main: #F6F8FA;
-    --accent: #369fff;
-    --black: #333;
-    --accent-derv: #69B7FF;
-    --gray: #707070;
-    
-    /* Transition */
-    --tran-02: all 0.2s ease;
-    --tran-03: all 0.3s ease;
-}
-
 body {
     background-color: var(--main);
     transition: var(--tran-05);
 }
 
 ::selection {
-    background-color: var(--accent);
+    background-color: var(--main-red);
     color: #fff;
 }
 
@@ -66,7 +52,7 @@ body {
 
 .sidebar .text,
 .sidebar .icon {
-    color: var(--gray);
+    color: var(--black);
     transition: var(--tran-03);
 }
 
@@ -113,9 +99,9 @@ body {
     justify-content: center;
 }
 
-.sidebar .head .image img {
-    width: 40px;
-    border-radius: 6px;
+.sidebar .head .image svg {
+    width: 35px;
+    fill: var(--main-red);
 }
 
 .sidebar .head .toggle {
@@ -125,7 +111,7 @@ body {
     transform: translateY(-50%) rotate(180deg);
     height: 25px;
     width: 25px;
-    background-color: var(--accent);
+    background-color: var(--main-red);
     color: var(--sidebar-color);
     border-radius: 50%;
     display: flex;
@@ -158,7 +144,7 @@ body {
 }
 
 .sidebar .active {
-    background-color: var(--accent) !important;
+    background-color: var(--main-red) !important;
 }
 
 .sidebar .active>.icon,
@@ -167,7 +153,7 @@ body {
 }
 
 .sidebar li a:hover {
-    background-color: var(--accent);
+    background-color: var(--main-red);
 }
 
 .sidebar li a:hover .icon,

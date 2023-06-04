@@ -3,13 +3,13 @@
 }
 
 .MuiPaper-root>.MuiToolbar-root {
-    background: var(--accent);
+    background: var(--main-red);
     color: #fff;
 }
 
-.mui-table .MuiSvgIcon-root:hover,
-.mui-table .MuiButtonBase-root:hover {
-    color: #000 !important;
+.MuiPaper-root>.MuiToolbar-root .MuiButtonBase-root:hover,
+.MuiPaper-root>.MuiToolbar-root .MuiSvgIcon-root:hover {
+    color: #333 ;
 }
 
 .MuiPaper-root>.MuiToolbar-root .MuiButtonBase-root,

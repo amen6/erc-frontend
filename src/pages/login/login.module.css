@@ -2,8 +2,19 @@
     width: 50%;
     height: 100vh;
     position: relative;
-    background-image: linear-gradient(180deg, var(--blue2), var(--blue1));
+    background: linear-gradient(-120deg, #D62121, #C72C2C, #3a1111);
     overflow: hidden;
+}
+
+.leftLogoContainer {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    margin-inline: 10px;
+}
+
+.leftLogoContainer svg {
+    fill: #fff;
 }
 
 .leftSideLogin img {

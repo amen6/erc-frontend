@@ -4,6 +4,21 @@
   padding: 0;
 }
 
+:root {
+  --sidebar-color: #FFF;
+  --toggle-color: #DDD;
+  --main: #F6F8FA;
+  --main-red: #e3201c;
+  --accent: #369fff;
+  --black: #333;
+  --accent-derv: #69B7FF;
+  --gray: #707070;
+
+  /* Transition */
+  --tran-02: all 0.2s ease;
+  --tran-03: all 0.3s ease;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

@@ -708,7 +708,7 @@ function Users(props) {
                 <SaveAsRounded
                   className="save-btn"
                   sx={{
-                    color: "#5cbdcb",
+                    color: "#333",
                     cursor: "pointer",
                     justifyItems: "center",
                     alignItems: "center",
@@ -732,7 +732,7 @@ function Users(props) {
                     setEditingRow(tableMeta.rowIndex);
                   }}
                   sx={{
-                    color: "#5cbdcb",
+                    color: "#333",
                     cursor: "pointer",
                     justifyItems: "center",
                     alignItems: "center",
@@ -747,7 +747,7 @@ function Users(props) {
               &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
               <DeleteRounded
                 sx={{
-                  color: "#5cbdcb",
+                  color: "#333",
                   cursor: "pointer",
                   justifyItems: "center",
                   alignItems: "center",

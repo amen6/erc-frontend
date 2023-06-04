@@ -167,7 +167,7 @@ div.card div.card-description {
     height: 40px;
 }
 
-.card-description>span>bold {
+.card-description>span>strong {
     font-weight: 600;
 }
 
@@ -182,7 +182,7 @@ div.card div.card-actions {
     box-sizing: content-box;
 }
 
-div.card div.card-actions bold {
+div.card div.card-actions strong {
     font-weight: 500;
 }
 
