@@ -6,6 +6,7 @@ import { BsFileMedicalFill, BsFillHospitalFill } from "react-icons/bs";
 import { FaAmbulance, FaClinicMedical } from "react-icons/fa";
 import { RiTeamFill } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
+import { MdSick } from "react-icons/md";
 import { useSignOut } from "react-auth-kit";
 import logo from "./logo.svg";
 
@@ -91,6 +92,12 @@ const Sidebar = (props) => {
                 </NavLink>
               </li>
 
+              <li className="nav-link">
+                <NavLink to="/patients">
+                  <MdSick className="icon" />
+                  <span className="text nav-text">Patients</span>
+                </NavLink>
+              </li>
               {/* <li className="nav-link">
                 <NavLink to="/test">
                   <BiHomeAlt className="icon" />
