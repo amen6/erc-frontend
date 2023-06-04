@@ -6,10 +6,12 @@ import Loading from "../../components/loader/loader";
 import TeamCard from "../../components/teamCard/teamCard";
 import useFetch from "../../components/customFetch/customFetch";
 import ConfirmationPopup from "../../components/confirmationPopup/confirmationPopup";
+import AddTeam from "../../components/addTeam/addTeam";
 import { AddCircle } from "@mui/icons-material/";
 
 export default function TeamsPage() {
   const [DeleteId, setDeleteId] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
   const authHeader = useAuthHeader();
   let { data, isLoading, error, reFetch } = useFetch("team", authHeader());
 
@@ -33,6 +35,14 @@ export default function TeamsPage() {
       });
   };
 
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
   console.log(data, isLoading, error);
   return (
     <>
@@ -40,7 +50,7 @@ export default function TeamsPage() {
         <Loading />
       ) : (
         <>
-          <AddCircle className="circular-add" />
+          <AddCircle className="circular-add" onClick={handleClickOpen} />
           <div className="team-cards-container">
             {data.data.map((e) => {
               return (
@@ -55,6 +65,7 @@ export default function TeamsPage() {
           </div>
         </>
       )}
+      <AddTeam handleClose={handleClose} open={dialogOpen} reFetch={reFetch} />
       <ConfirmationPopup
         handleDelete={handleDelete}
         id={DeleteId}
