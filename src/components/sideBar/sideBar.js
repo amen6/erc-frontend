@@ -45,7 +45,7 @@ const Sidebar = (props) => {
 
             <div className="text logo-text">
               <span className="name">Welcome</span>
-              <span className="profession">CEO</span>
+              <span className="profession"></span>
             </div>
           </div>
           <BiChevronRight className="toggle" onClick={handleToggleSidebar} />

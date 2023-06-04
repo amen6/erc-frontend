@@ -10,6 +10,7 @@ import AddTeam from "../../components/addTeam/addTeam";
 import { AddCircle } from "@mui/icons-material/";
 
 export default function TeamsPage() {
+  document.title = "Teams";
   const [DeleteId, setDeleteId] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const authHeader = useAuthHeader();
