@@ -6,10 +6,13 @@ import AmbulanceCard from "../../components/ambulanceCard/card";
 import Loader from "../../components/loader/loader";
 import useFetch from "../../components/customFetch/customFetch";
 import ConfirmationPopup from "../../components/confirmationPopup/confirmationPopup";
+import AddAmbulance from "../../components/addAmbulance/addAmbulance";
+import { AddCircle } from "@mui/icons-material/";
 
 export default function Ambulances() {
   const [isCardsShowing, setIsCardsShowing] = useState(false);
   const [DeleteId, setDeleteId] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
   const authHeader = useAuthHeader();
   const { data, isLoading, error, reFetch } = useFetch(
     "ambulance",
@@ -46,6 +49,14 @@ export default function Ambulances() {
     document.querySelector(".confirmation-popup").showModal();
   };
 
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -54,6 +65,7 @@ export default function Ambulances() {
         </>
       ) : (
         <div className={`cards${isCardsShowing ? " showing" : ""}`}>
+          <AddCircle className="circular-add" onClick={handleClickOpen} />
           {data.data
             ? data.data.map((e) => {
                 return (
@@ -75,6 +87,11 @@ export default function Ambulances() {
             : null}
         </div>
       )}
+      <AddAmbulance
+        handleClose={handleClose}
+        open={dialogOpen}
+        reFetch={reFetch}
+      />
       <ConfirmationPopup
         handleDelete={handleDelete}
         id={DeleteId}

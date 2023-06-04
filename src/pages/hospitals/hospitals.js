@@ -5,16 +5,20 @@ import Card from "../../components/card/card";
 import Loader from "../../components/loader/loader";
 import ConfirmationPopup from "../../components/confirmationPopup/confirmationPopup";
 import { useAuthHeader } from "react-auth-kit";
+import AddAmbulance from "../../components/addHospital/addHospital";
+import { AddCircle } from "@mui/icons-material/";
 
-export default function Ambulances() {
+export default function Hospitals() {
   const [isCardsShowing, setIsCardsShowing] = useState(false);
   const [Loading, setLoading] = useState(true);
   const [Data, setData] = useState([]);
   const [DeleteId, setDeleteId] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const authHeader = useAuthHeader();
   useEffect(() => {
     setLoading(true);
-    document.title = "Ambulances";
+    document.title = "Hospitals";
     getData();
   }, []);
 
@@ -58,6 +62,14 @@ export default function Ambulances() {
     document.querySelector(".confirmation-popup").showModal();
   };
 
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <>
       {Loading ? (
@@ -66,6 +78,7 @@ export default function Ambulances() {
         </>
       ) : (
         <div className={`cards${isCardsShowing ? " showing" : ""}`}>
+          <AddCircle className="circular-add" onClick={handleClickOpen} />
           {Data
             ? Data.map((e) => {
                 return (
@@ -86,6 +99,11 @@ export default function Ambulances() {
             : null}
         </div>
       )}
+      <AddAmbulance
+        handleClose={handleClose}
+        open={dialogOpen}
+        getData={getData}
+      />
       <ConfirmationPopup
         handleDelete={handleDelete}
         id={DeleteId}
