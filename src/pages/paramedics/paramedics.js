@@ -9,6 +9,7 @@ import {
   AppRegistrationSharp,
   DeleteRounded,
   SaveAsRounded,
+  AddCircle,
 } from "@mui/icons-material/";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -16,6 +17,7 @@ import dayjs from "dayjs";
 import { TextField, Switch } from "@mui/material";
 import { useAuthHeader } from "react-auth-kit";
 import useFetch from "../../components/customFetch/customFetch";
+import AddParamedic from "../../components/addParamedic/addParamedic";
 
 function createData(
   _id,
@@ -53,6 +55,7 @@ function Paramedics(props) {
   const [editingRow, setEditingRow] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const authHeader = useAuthHeader();
   useEffect(() => {
     document.title = "Paramedics";
@@ -418,7 +421,7 @@ function Paramedics(props) {
                   />
                 </LocalizationProvider>
               ) : (
-                date.toLocaleString()
+                date.toLocaleDateString()
               )}
             </div>
           );
@@ -597,6 +600,15 @@ function Paramedics(props) {
     onRowsDelete: handleDelete,
     fullScreen: true,
   };
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -605,6 +617,7 @@ function Paramedics(props) {
         </div>
       ) : (
         <div>
+          <AddCircle className="circular-add" onClick={handleClickOpen} />
           <Box sx={{ maxWidth: "75%", margin: "auto" }} className="mui-table">
             <MUIDataTable
               title={"Paramedics"}
@@ -619,6 +632,12 @@ function Paramedics(props) {
                 textAlign: "center",
               }}
             />
+            <AddParamedic
+              handleClose={handleClose}
+              open={dialogOpen}
+              reFetch={reFetch}
+            />
+
             <ConfirmationPopup
               handleDelete={handleDelete}
               id={deleteId}
