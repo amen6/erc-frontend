@@ -10,8 +10,13 @@ import {
   AppRegistrationSharp,
   DeleteRounded,
   SaveAsRounded,
+  AddCircle,
 } from "@mui/icons-material/";
-import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers";
+import {
+  LocalizationProvider,
+  TimePicker,
+  DatePicker,
+} from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import {
@@ -24,6 +29,7 @@ import {
 } from "@mui/material";
 import { useAuthHeader } from "react-auth-kit";
 import useFetch from "../../components/customFetch/customFetch";
+import AddMission from "../../components/addMission/addMission";
 
 function createData(
   _id,
@@ -65,6 +71,7 @@ function Users(props) {
   const [editingRow, setEditingRow] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const authHeader = useAuthHeader();
 
   useEffect(() => {
@@ -216,7 +223,7 @@ function Users(props) {
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateTimePicker
+                  <DatePicker
                     label="Choose Time"
                     className="mui-datetimepicker"
                     defaultValue={dayjs(date)}
@@ -227,7 +234,7 @@ function Users(props) {
                   />
                 </LocalizationProvider>
               ) : (
-                date.toLocaleString()
+                date.toLocaleDateString()
               )}
             </div>
           );
@@ -297,7 +304,7 @@ function Users(props) {
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateTimePicker
+                  <TimePicker
                     label="Choose Time"
                     className="mui-datetimepicker"
                     defaultValue={dayjs(date)}
@@ -308,7 +315,7 @@ function Users(props) {
                   />
                 </LocalizationProvider>
               ) : (
-                date.toLocaleString()
+                date.toLocaleTimeString()
               )}
             </div>
           );
@@ -329,7 +336,7 @@ function Users(props) {
             <div style={{ textAlign: "center" }}>
               {isEditing ? (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateTimePicker
+                  <TimePicker
                     label="Choose Time"
                     className="mui-datetimepicker"
                     defaultValue={dayjs(date)}
@@ -340,7 +347,7 @@ function Users(props) {
                   />
                 </LocalizationProvider>
               ) : (
-                date.toLocaleString()
+                date.toLocaleTimeString()
               )}
             </div>
           );
@@ -786,6 +793,15 @@ function Users(props) {
     onRowsDelete: handleDelete,
     fullScreen: true,
   };
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <>
       {Loading ? (
@@ -794,6 +810,7 @@ function Users(props) {
         </div>
       ) : (
         <div>
+          <AddCircle className="circular-add" onClick={handleClickOpen} />
           <Box sx={{ maxWidth: "75%", margin: "auto" }} className="mui-table">
             <MUIDataTable
               title={"Missions"}
@@ -807,6 +824,15 @@ function Users(props) {
                 zIndex: 1,
                 textAlign: "center",
               }}
+            />
+            <AddMission
+              handleClose={handleClose}
+              open={dialogOpen}
+              getData={getData}
+              ambulancesData={ambulancesData}
+              casesData={casesData}
+              patientsData={patientsData}
+              hospitalsData={hospitalsData}
             />
             <ConfirmationPopup
               handleDelete={handleDelete}
