@@ -9,6 +9,7 @@ import {
   AppRegistrationSharp,
   DeleteRounded,
   SaveAsRounded,
+  AddCircle,
 } from "@mui/icons-material/";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -16,6 +17,7 @@ import dayjs from "dayjs";
 import { TextField } from "@mui/material";
 import { useAuthHeader } from "react-auth-kit";
 import useFetch from "../../components/customFetch/customFetch";
+import AddPatient from "../../components/addPatient/addPatient";
 
 function createData(
   _id,
@@ -43,6 +45,7 @@ function Patients(props) {
   const [editingRow, setEditingRow] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const authHeader = useAuthHeader();
 
   useEffect(() => {
@@ -206,7 +209,7 @@ function Patients(props) {
                   />
                 </LocalizationProvider>
               ) : (
-                date.toLocaleString()
+                date.toLocaleDateString()
               )}
             </div>
           );
@@ -416,6 +419,15 @@ function Patients(props) {
     onRowsDelete: handleDelete,
     fullScreen: true,
   };
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -424,6 +436,7 @@ function Patients(props) {
         </div>
       ) : (
         <div>
+          <AddCircle className="circular-add" onClick={handleClickOpen} />
           <Box sx={{ maxWidth: "75%", margin: "auto" }} className="mui-table">
             <MUIDataTable
               title={"Patients"}
@@ -437,6 +450,11 @@ function Patients(props) {
                 zIndex: 1,
                 textAlign: "center",
               }}
+            />
+            <AddPatient
+              handleClose={handleClose}
+              open={dialogOpen}
+              reFetch={reFetch}
             />
             <ConfirmationPopup
               handleDelete={handleDelete}
