@@ -29,20 +29,37 @@ function AddNewTask(props) {
     setImage("");
   };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
+    const imgform = new FormData();
+    imgform.append("image", Image, Image.name);
+    let res = await axios.post(
+      `https://api.imgbb.com/1/upload?key=69a20acd75695c95491710b987cb2d21`,
+      imgform
+    );
+    let ImageLink = res.data.data.display_url;
     const form = new FormData();
-    form.append("image", Image);
+    form.append("image", ImageLink);
     form.append("name", AmbulanceName);
     form.append("fuel_type", FuelType);
     form.append("fuel_percentage", FuelAmount);
     form.append("out_of_service", Available);
 
     axios
-      .post(`${process.env.REACT_APP_URL}ambulance/`, form, {
-        headers: {
-          Authorization: authHeader(),
+      .post(
+        `${process.env.REACT_APP_URL}ambulance/`,
+        {
+          image: ImageLink,
+          name: AmbulanceName,
+          fuel_type: FuelType,
+          fuel_percentage: FuelAmount,
+          out_of_service: Available,
         },
-      })
+        {
+          headers: {
+            Authorization: authHeader(),
+          },
+        }
+      )
       .then((response) => {
         cleanState();
         props.handleClose();

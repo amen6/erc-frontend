@@ -124,7 +124,7 @@ export default function Card(props) {
         <div className="card__image-holder">
           <img
             className="card__image"
-            src={`${process.env.REACT_APP_URL}${props.image}`}
+            src={`${props.image}`}
             alt={props.image}
           />
         </div>

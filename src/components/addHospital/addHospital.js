@@ -26,18 +26,34 @@ function AddNewTask(props) {
     setImage("");
   };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
+    const imgform = new FormData();
+    imgform.append("image", Image, Image.name);
+    let res = await axios.post(
+      `https://api.imgbb.com/1/upload?key=69a20acd75695c95491710b987cb2d21`,
+      imgform
+    );
+    let ImageLink = res.data.data.display_url;
     const form = new FormData();
     form.append("name", HospitalName);
     form.append("image", Image);
     form.append("available", Available);
     form.append("hospital_code", HospitalCode);
     axios
-      .post(`${process.env.REACT_APP_URL}hospital/`, form, {
-        headers: {
-          Authorization: authHeader(),
+      .post(
+        `${process.env.REACT_APP_URL}hospital/`,
+        {
+          name: HospitalName,
+          image: ImageLink,
+          available: Available,
+          hospital_code: HospitalCode,
         },
-      })
+        {
+          headers: {
+            Authorization: authHeader(),
+          },
+        }
+      )
       .then((response) => {
         cleanState();
         props.handleClose();
