@@ -8,7 +8,6 @@ import { RiTeamFill } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import { MdSick } from "react-icons/md";
 import { useSignOut } from "react-auth-kit";
-import logo from "./logo.svg";
 
 const Sidebar = (props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -55,7 +54,7 @@ const Sidebar = (props) => {
           <div className="menu">
             <ul className="menu-links">
               <li className="nav-link">
-                <NavLink to="/">
+                <NavLink to="/home">
                   <FaClinicMedical className="icon" />
                   <span className="text nav-text">Home</span>
                 </NavLink>

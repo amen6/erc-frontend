@@ -13,7 +13,7 @@ import axios from "axios";
 import { useAuthHeader } from "react-auth-kit";
 
 function AddNewTask(props) {
-  const [Image, setImage] = useState();
+  const [Image, setImage] = useState("");
   const [HospitalName, setHospitalName] = useState("");
   const [HospitalCode, setHospitalCode] = useState("");
   const [Available, setAvailable] = useState(true);
@@ -23,27 +23,21 @@ function AddNewTask(props) {
     setHospitalName("");
     setHospitalCode("");
     setAvailable(true);
-    setImage();
+    setImage("");
   };
 
   const handleAdd = () => {
     const form = new FormData();
     form.append("name", HospitalName);
-    form.append("image", Image, Image.name);
-    form.append("fuel_percentage", HospitalCode);
-    form.append("out_of_service", Available);
+    form.append("image", Image);
+    form.append("available", Available);
+    form.append("hospital_code", HospitalCode);
     axios
-      .post(
-        `${process.env.REACT_APP_URL}hospital/`,
-        {
-          form,
+      .post(`${process.env.REACT_APP_URL}hospital/`, form, {
+        headers: {
+          Authorization: authHeader(),
         },
-        {
-          headers: {
-            Authorization: authHeader(),
-          },
-        }
-      )
+      })
       .then((response) => {
         cleanState();
         props.handleClose();
@@ -80,6 +74,11 @@ function AddNewTask(props) {
       backgroundColor: "rgb(67, 160, 71)",
     },
   }));
+
+  const handleChangeImage = (e) => {
+    setImage(e.target.files[0]);
+  };
+
   return (
     <>
       <Dialog open={props.open}>
@@ -106,15 +105,15 @@ function AddNewTask(props) {
               >
                 <h4 style={{ fontWeight: "500", color: "#777" }}>Image</h4>
               </div>
-              <TextField
+              <input
+                className="css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                 type="file"
                 id="duration-picker"
                 placeholder=""
                 required
-                sx={{ width: "160px" }}
-                variant="outlined"
+                style={{ width: "160px" }}
                 onChange={(e) => {
-                  setImage(e.target.files[0]);
+                  handleChangeImage(e);
                 }}
               />
             </div>

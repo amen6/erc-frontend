@@ -32,7 +32,7 @@ function Login() {
             isAdmin: response.data.super,
           },
         });
-        navigate("/");
+        navigate("/home");
       })
       .catch((error) => {
         console.log(error);

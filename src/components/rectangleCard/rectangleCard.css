@@ -1,0 +1,30 @@
+.rectangle-card:first-child {
+    margin-top: 0;
+}
+
+.rectangle-card {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    width: 400px;
+    margin-inline: auto;
+    border: 1px solid #bbb;
+}
+
+.rectangle-card>svg {
+    box-sizing: border-box;
+    padding: 8px;
+    background: rgba(112, 112, 112, .1);
+    border-radius: 50%;
+    font-size: 50px;
+    color: #000;
+}
+
+.info-container {
+    margin-left: 20px;
+}
+
+.info-container h4 {
+    color: var(--gray);
+    font-weight: 400;
+}

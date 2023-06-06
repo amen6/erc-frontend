@@ -7,6 +7,7 @@ import Teams from "./pages/teams/teams";
 import Login from "./pages/login/login";
 import Paramedics from "./pages/paramedics/paramedics";
 import Patients from "./pages/patients/patients";
+import Home from "./pages/home/home";
 import { Route, Routes } from "react-router-dom";
 import { AuthProvider } from "react-auth-kit";
 
@@ -21,6 +22,7 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<Container />}>
+            <Route path="/home" element={<Home />}></Route>
             <Route path="/missions" element={<Mission />}></Route>
             <Route path="/ambulances" element={<Ambulances />}></Route>
             <Route path="/hospitals" element={<Hospitals />}></Route>

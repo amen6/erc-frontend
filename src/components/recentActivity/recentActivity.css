@@ -1,0 +1,40 @@
+.recent-activity {
+    width: 300px;
+    margin: 0 auto 10px auto;
+}
+
+.recent-activity-top {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.recent-activity-top svg {
+    box-sizing: content-box;
+    font-size: 24px;
+    padding: 4px;
+    border-radius: 6px;
+    background: rgba(55, 55, 55, .1);
+}
+
+.recent-activity-top p {
+    margin-left: 8px;
+    line-height: 22px;
+}
+
+.recent-activity-date {
+    display: flex;
+    align-items: center;
+    margin: 5px 0 0 14px;
+    border-left: 2px solid #aaa;
+    padding: 7px 0 10px 20px;
+    font-size: 12px;
+    color: #aaa;
+    font-weight: 500;
+}
+
+.recent-activity-date svg {
+    color: #bbb;
+    font-size: 18px;
+    margin-right: 5px;
+}
