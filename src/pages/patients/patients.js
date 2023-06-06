@@ -290,7 +290,7 @@ function Patients(props) {
                   onChange={(e) => {
                     updateValue(e.target.value);
                   }}
-                  label="Address"
+                  label="Description"
                 />
               ) : (
                 value
@@ -318,7 +318,7 @@ function Patients(props) {
                   onChange={(e) => {
                     updateValue(e.target.value);
                   }}
-                  label="Address"
+                  label="Guarantor"
                 />
               ) : (
                 value

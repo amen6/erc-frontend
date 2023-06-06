@@ -386,7 +386,7 @@ function Paramedics(props) {
                   onChange={(e) => {
                     updateValue(e.target.value);
                   }}
-                  label="Sejel Place"
+                  label="Mother Name"
                 />
               ) : (
                 value
