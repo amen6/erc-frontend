@@ -120,6 +120,7 @@ body {
     font-size: 22px;
     cursor: pointer;
     transition: var(--tran-03);
+    visibility: visible;
 }
 
 .sidebar.close .toggle {
@@ -211,7 +212,10 @@ body {
 
 @media (max-width: 768px) {
     .sidebar.close {
-        display: none;
+        visibility: hidden;
+    }
+    .sidebar .head .toggle {
+        right: 40px;
     }
 
     .sidebar.close img {
@@ -220,5 +224,13 @@ body {
 
     .sidebar {
         width: 100vw;
+        padding-right: 20px;
+    }
+    .sidebar .head .toggle {
+        right: 0px;
+    }
+
+    .sidebar.close .head .toggle {
+        right: 30px;
     }
 }
